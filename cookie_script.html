@@ -1,0 +1,89 @@
+<html>
+
+<title>Cookie</title>
+
+<head>
+    <script>  
+   /* This is a script that is used to set cookies to open/closed on/off or which ever is prefered, 
+    I created this script for a pop up on www.suryaheating.co.uk. */
+
+    // Set Default Cookie, taken from w3schools
+
+    function setCookie(cname,cvalue,exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires=" + d.toGMTString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    // Get Default Cookie, taken from w3schools
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    // Cookie name
+    var name = "set_cookie";
+    // Get cookie name
+    var get_name = getCookie(name);
+    console.log(get_name);
+
+    // Set cookie to open
+    function openCookie() {
+        var status = getCookie("open");
+        status = "open";
+        if (status != "" && status != null) {
+            setCookie(name, status, 30);
+        }
+
+        location.reload()
+
+    }
+
+    // Set cookie to closed
+    function closeCookie() {
+        var status = getCookie("close");
+        status = "close";
+        if (status != "" && status != null) {
+            setCookie(name, status, 30);
+        }
+
+        location.reload()
+    }
+
+    // On window load/refresh set rules
+    window.onload = function() {
+        // If cookie is set to open...
+        if (get_name == "open") {
+             document.getElementById("cookie").innerHTML = 'Open';
+        // If cookie is set to closed...
+        } else if (get_name == "close") {
+             document.getElementById("cookie").innerHTML = 'Closed';
+        // If cookie has not been set...
+        } else {
+            document.getElementById("cookie").innerHTML = 'Not Set';
+        }
+    }
+</script>
+</head>
+
+<body>
+    <button onclick="openCookie()">open</button>
+    <button onclick="closeCookie()">close</button>
+    <p id="cookie"></p>
+</body>
+
+
+
